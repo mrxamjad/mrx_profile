@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mrx_profile/screens/HomePage.dart';
+import 'package:mrx_profile/screens/MobileLayout.dart';
+import 'package:mrx_profile/screens/ResponsiveLayout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: ResponsiveLayout(),
     );
   }
 }

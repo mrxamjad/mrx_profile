@@ -4,7 +4,11 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-Padding skillProgress(BuildContext context, String skillName, int perscent) {
+Padding skillProgress(
+    {required BuildContext context,
+    required String skillName,
+    required int perscent,
+    double width = 100}) {
   String centerText = "";
   if (perscent <= 25) {
     centerText = "Beginner";
@@ -30,7 +34,7 @@ Padding skillProgress(BuildContext context, String skillName, int perscent) {
           ),
         ),
         LinearPercentIndicator(
-          width: context.percentWidth * 40,
+          width: width,
           animation: true,
           lineHeight: 10.0,
           animationDuration: 2000,
