@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mrx_profile/Widget/CertificateView.dart';
 import 'package:mrx_profile/Widget/CodingSection.dart';
 import 'package:mrx_profile/Widget/HireMe.dart';
 import 'package:mrx_profile/Widget/ProfileSection.dart';
@@ -47,38 +48,43 @@ class _DesktopLayoutState extends State<DesktopLayout> {
                   "https://assets10.lottiefiles.com/packages/lf20_ugIuhrl2vw.json"),
             ),
             SingleChildScrollView(
-              child: Row(
+              child: Column(
                 children: [
-                  CustomDrawer(context: context, width: screenWidth * .25),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ProfileSection(context),
-                            SkillSection(
-                              context: context,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomDrawer(context: context, width: screenWidth * .25),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ProfileSection(context),
+                                SkillSection(
+                                  context: context,
+                                ),
+                                CodingSection(context),
+
+                                CertificationSection(context: context),
+
+                                // Profile Section
+                              ],
                             ),
-                            CodingSection(context),
-
-                            // CertificationSection(context: context),
-                            TestomonialRevies(
-                              context: context,
-                            ),
-                            HireMeSection(context),
-
-                            SocialNewtwork(),
-
-                            // Profile Section
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
+                  TestomonialRevies(
+                    context: context,
+                  ),
+                  HireMeSection(context),
+                  SocialNewtwork(context),
                 ],
               ),
             ),

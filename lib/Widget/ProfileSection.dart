@@ -10,8 +10,11 @@ import 'package:velocity_x/velocity_x.dart';
 Stack ProfileSection(BuildContext context) {
   return Stack(children: [
     // CustomDrawer(context),
-    Container(
+    SizedBox(
       width: context.screenWidth,
+      height: context.screenSize.width < 600
+          ? context.percentWidth * 30
+          : context.percentWidth * 20,
       child: Lottie.network(
           fit: BoxFit.cover,
           'https://assets10.lottiefiles.com/packages/lf20_CR23KK4W5R.json'),
@@ -21,6 +24,7 @@ Stack ProfileSection(BuildContext context) {
       child: Image.asset(
         "assets/images/background.png",
         height: context.percentHeight * 30,
+        width: context.percentWidth * 100,
       ),
     ),
 
@@ -36,9 +40,11 @@ Stack ProfileSection(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Amjad Ali",
-              style: xTextStyle(bold: true, fontSize: 22),
+            Container(
+              child: Text(
+                "Amjad Ali",
+                style: xTextStyle(bold: true, fontSize: 22),
+              ),
             ),
             Text(
               "Hello I'm Amjad, A Flutter Developer and Application developer I have various skill like web development and Java devolopment",
@@ -48,25 +54,24 @@ Stack ProfileSection(BuildContext context) {
             SizedBox(
                 width: 150,
                 child: xDesigButton(
-                    buttonName: "Download CV", icon: Icons.download))
+                    buttonName: "Download CV", icon: Icons.download)),
           ],
         ),
       ),
     ),
     Align(
       alignment: Alignment.centerRight,
-      child: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 80),
-            child: ClipRect(
-              child: Image.asset(
-                "assets/images/profile.png",
-                height: context.percentHeight * 30,
-              ),
-            ),
-          )
-        ],
+      child: Container(
+        margin: EdgeInsets.only(
+            left: 80, right: !context.isMobile ? context.screenWidth * .08 : 0),
+        child: ClipRect(
+          child: Image.asset(
+            "assets/images/profile.png",
+            height: context.screenSize.width < 1000
+                ? context.percentHeight * 40
+                : context.percentWidth * 20,
+          ),
+        ),
       ),
     )
   ]);

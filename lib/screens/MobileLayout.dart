@@ -60,15 +60,15 @@ class HomePage extends StatelessWidget {
                     SkillSection(
                       context: context,
                     ),
-                    // CodingSection(context),
+                    CodingSection(context),
 
-                    // CertificationSection(context: context),
-                    // TestomonialRevies(
-                    //   context: context,
-                    // ),
-                    // HireMeSection(context),
+                    CertificationSection(context: context),
+                    TestomonialRevies(
+                      context: context,
+                    ),
+                    HireMeSection(context),
 
-                    SocialNewtwork(),
+                    SocialNewtwork(context),
 
                     // Profile Section
                   ],

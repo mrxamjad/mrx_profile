@@ -1,6 +1,8 @@
 // Skill Sections
 import 'package:flutter/material.dart';
 import 'package:mrx_profile/Controller/ClassData.dart';
+import 'package:mrx_profile/Widget/HeadingTitle.dart';
+import 'package:mrx_profile/Widget/drawer.dart';
 import 'package:mrx_profile/Widget/style.dart';
 import 'package:mrx_profile/constants/xcolor.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -10,57 +12,72 @@ ClassData classData = ClassData();
 Padding TestomonialRevies({
   required BuildContext context,
 }) {
+  double desktopHeight = context.percentHeight * 35;
+  double mobileHeight = context.percentHeight * 30;
   return Padding(
     padding: const EdgeInsets.only(top: 0),
-    child: Container(
-      height: context.percentHeight * 30,
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 210, 21, 243),
-              Color.fromARGB(255, 9, 137, 249)
-            ],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
+    child: Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          child:
+              HeadingTitle(title: "People that always been our fist priority"),
+        ),
+        Container(
+          height: context.screenWidth < 500 ? mobileHeight : desktopHeight,
+          width: context.screenWidth,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 210, 21, 243),
+                  Color.fromARGB(255, 9, 137, 249)
+                ],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+              ),
 
-          // backgroundBlendMode: BlendMode.colorBurn,
-          color: Colors.black12,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(80), topRight: Radius.circular(20))),
-      child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: VxSwiper.builder(
-            itemCount: classData.reviewsList.length,
-            autoPlay: true,
-            autoPlayAnimationDuration: 2.seconds,
-            itemBuilder: (context, index) => reviewCard(
-                context,
-                classData.reviewsList[index]['name'],
-                classData.reviewsList[index]['post'],
-                classData.reviewsList[index]['caption']),
-          )
-          //  ListView.builder(
-          //     itemCount: reviewsList.length,
-          //     scrollDirection: Axis.horizontal,
-          //     itemBuilder: (context, index) => reviewCard(
-          //           context,
-          //           reviewsList[index]['name'],
-          //           reviewsList[index]['post'],
-          //           reviewsList[index]['caption'],
-          //         )),
-          ),
+              // backgroundBlendMode: BlendMode.colorBurn,
+              color: Colors.black12,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(80), topRight: Radius.circular(20))),
+          child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: VxSwiper.builder(
+                itemCount: classData.reviewsList.length,
+                autoPlay: true,
+                autoPlayAnimationDuration: 2.seconds,
+                itemBuilder: (context, index) => reviewCard(
+                    context,
+                    classData.reviewsList[index]['name'],
+                    classData.reviewsList[index]['post'],
+                    classData.reviewsList[index]['caption']),
+              )
+              //  ListView.builder(
+              //     itemCount: reviewsList.length,
+              //     scrollDirection: Axis.horizontal,
+              //     itemBuilder: (context, index) => reviewCard(
+              //           context,
+              //           reviewsList[index]['name'],
+              //           reviewsList[index]['post'],
+              //           reviewsList[index]['caption'],
+              //         )),
+              ),
+        ),
+      ],
     ),
   );
 }
 
 Padding reviewCard(
     BuildContext context, String name, String post, String caption) {
+  double desktopHeight = context.percentHeight * 35;
+  double mobileHeight = context.percentHeight * 30;
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Center(
       child: SizedBox(
-        height: context.percentHeight * 27,
+        height:
+            context.screenWidth < 500 ? mobileHeight - 10 : desktopHeight - 10,
         child: Card(
           elevation: 10,
           shape: const RoundedRectangleBorder(
@@ -80,7 +97,9 @@ Padding reviewCard(
                 gradient: LinearGradient(colors: [xcolorGreen, xcolorSky])),
             padding: const EdgeInsets.all(20),
             width: context.percentWidth * 80,
-            height: context.percentHeight * 20,
+            height: context.screenWidth < 500
+                ? mobileHeight - 15
+                : desktopHeight - 15,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
