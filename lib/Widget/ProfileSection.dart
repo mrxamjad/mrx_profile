@@ -12,21 +12,23 @@ Stack ProfileSection(BuildContext context) {
     // CustomDrawer(context),
     SizedBox(
       width: context.screenWidth,
-      height: context.screenSize.width < 600
-          ? context.percentWidth * 30
-          : context.percentWidth * 20,
+      height: context.screenHeight < 550
+          ? 110
+          : context.screenSize.width < 600
+              ? context.percentWidth * 30
+              : context.percentWidth * 20,
       child: Lottie.network(
           fit: BoxFit.cover,
           'https://assets10.lottiefiles.com/packages/lf20_CR23KK4W5R.json'),
     ),
-    Container(
-      margin: const EdgeInsets.only(left: 20),
-      child: Image.asset(
-        "assets/images/background.png",
-        height: context.percentHeight * 30,
-        width: context.percentWidth * 100,
-      ),
-    ),
+    // Container(
+    //   margin: const EdgeInsets.only(left: 20),
+    //   child: Image.asset(
+    //     "assets/images/background.png",
+    //     height: context.screenHeight < 550 ? 165 : context.percentHeight * 30,
+    //     width: context.percentWidth * 100,
+    //   ),
+    // ),
 
     Align(
       alignment: Alignment.centerLeft,
@@ -63,13 +65,16 @@ Stack ProfileSection(BuildContext context) {
       alignment: Alignment.centerRight,
       child: Container(
         margin: EdgeInsets.only(
-            left: 80, right: !context.isMobile ? context.screenWidth * .08 : 0),
+            left: 80,
+            right: context.screenHeight > 550 ? context.screenWidth * .08 : 0),
         child: ClipRect(
           child: Image.asset(
             "assets/images/profile.png",
-            height: context.screenSize.width < 1000
-                ? context.percentHeight * 40
-                : context.percentWidth * 20,
+            height: context.screenHeight < 550
+                ? 220
+                : context.screenSize.width < 1000
+                    ? context.percentHeight * 40
+                    : context.percentWidth * 20,
           ),
         ),
       ),

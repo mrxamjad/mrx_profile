@@ -22,9 +22,12 @@ Padding SkillSection({
               HeadingTitle(title: "Skills that always make me more accurate"),
         ),
         Container(
-          height: context.screenWidth >= 500
-              ? context.percentHeight * 40
-              : context.percentHeight * 32,
+          alignment: Alignment.center,
+          height: context.screenHeight < 550
+              ? 220
+              : context.screenWidth >= 500
+                  ? context.percentHeight * 40
+                  : context.percentHeight * 32,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [

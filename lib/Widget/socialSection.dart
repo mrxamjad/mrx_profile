@@ -7,9 +7,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 Future<void> goToWebPage(String urlString) async {
   final Uri _url = Uri.parse(urlString);
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
+  await launchUrl(_url);
 }
 
 SizedBox SocialNewtwork(BuildContext context) {
@@ -19,6 +17,10 @@ SizedBox SocialNewtwork(BuildContext context) {
       margin: const EdgeInsets.all(10),
       child: Column(
         children: [
+          Text("Height: " +
+              context.screenHeight.toString() +
+              "  Width: " +
+              context.screenWidth.toString()),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(

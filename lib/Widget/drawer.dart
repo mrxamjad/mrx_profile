@@ -189,9 +189,36 @@ Container ProfileImage(BuildContext context) {
                 fontStyle: FontStyle.normal,
                 color: Colors.white,
               )),
-          const SizedBox(
-            height: 20,
-          )
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+                width: 100,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      width: 2,
+                      color: xcolorGreenAccent,
+                    )),
+                margin: EdgeInsets.all(5),
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.login_rounded,
+                        color: xcoloryellow,
+                      )
+                    ],
+                  ),
+                )),
+          ),
         ],
       ));
 }

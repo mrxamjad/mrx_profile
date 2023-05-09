@@ -80,10 +80,14 @@ class _DesktopLayoutState extends State<DesktopLayout> {
                       ),
                     ],
                   ),
-                  TestomonialRevies(
-                    context: context,
+                  Row(
+                    children: [
+                      HireMeSection(context),
+                      TestomonialRevies(
+                        context: context,
+                      ),
+                    ],
                   ),
-                  HireMeSection(context),
                   SocialNewtwork(context),
                 ],
               ),

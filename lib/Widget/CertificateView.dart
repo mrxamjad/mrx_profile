@@ -19,13 +19,16 @@ Padding CertificationSection({
         Container(
           margin: EdgeInsets.only(top: 10),
           child: HeadingTitle(
-              title:
-                  "Achievement and Certification that prove consistancy and dedication"),
+            title:
+                "Achievement and Certification that prove consistancy and dedication",
+          ),
         ),
         Container(
-          height: context.screenWidth >= 500
-              ? context.percentHeight * 50
-              : context.percentHeight * 40,
+          height: context.screenHeight < 550
+              ? 230
+              : context.screenWidth >= 500
+                  ? 400
+                  : 300,
           width: context.screenWidth * .98,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -78,9 +81,11 @@ Padding CertificateView(BuildContext context) {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60)),
                     child: Container(
-                        height: context.screenWidth >= 500
-                            ? context.percentHeight * 37
-                            : context.percentHeight * 20,
+                        height: context.screenHeight < 550
+                            ? 180
+                            : context.screenWidth >= 500
+                                ? 350
+                                : 300,
                         width: context.screenWidth >= 500
                             ? context.percentWidth * 70
                             : context.percentWidth * 95,

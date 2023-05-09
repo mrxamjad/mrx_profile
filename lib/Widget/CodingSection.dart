@@ -17,9 +17,11 @@ Padding CodingSection(BuildContext context) {
           child: HeadingTitle(title: "Excellence In Programing & Coding"),
         ),
         Container(
-            height: context.screenWidth >= 500
-                ? context.percentHeight * 32
-                : context.percentHeight * 26,
+            height: context.screenHeight < 550
+                ? 170
+                : context.screenWidth >= 500
+                    ? context.percentHeight * 32
+                    : context.percentHeight * 28,
             width: context.percentWidth * 100,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),

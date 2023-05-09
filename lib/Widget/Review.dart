@@ -12,8 +12,8 @@ ClassData classData = ClassData();
 Padding TestomonialRevies({
   required BuildContext context,
 }) {
-  double desktopHeight = context.percentHeight * 35;
-  double mobileHeight = context.percentHeight * 30;
+  double desktopHeight = context.percentHeight * 40;
+  double mobileHeight = context.percentHeight * 37;
   return Padding(
     padding: const EdgeInsets.only(top: 0),
     child: Column(
@@ -24,8 +24,12 @@ Padding TestomonialRevies({
               HeadingTitle(title: "People that always been our fist priority"),
         ),
         Container(
-          height: context.screenWidth < 500 ? mobileHeight : desktopHeight,
-          width: context.screenWidth,
+          height: context.screenHeight < 550
+              ? 220
+              : context.screenWidth < 500
+                  ? mobileHeight
+                  : desktopHeight,
+          // width: context.screenWidth,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -45,6 +49,8 @@ Padding TestomonialRevies({
               child: VxSwiper.builder(
                 itemCount: classData.reviewsList.length,
                 autoPlay: true,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
                 autoPlayAnimationDuration: 2.seconds,
                 itemBuilder: (context, index) => reviewCard(
                     context,
@@ -76,8 +82,11 @@ Padding reviewCard(
     padding: const EdgeInsets.all(8.0),
     child: Center(
       child: SizedBox(
-        height:
-            context.screenWidth < 500 ? mobileHeight - 10 : desktopHeight - 10,
+        height: context.screenHeight < 550
+            ? 190
+            : context.screenWidth < 500
+                ? mobileHeight - 10
+                : desktopHeight - 10,
         child: Card(
           elevation: 10,
           shape: const RoundedRectangleBorder(
@@ -96,10 +105,12 @@ Padding reviewCard(
                     bottomRight: Radius.circular(40)),
                 gradient: LinearGradient(colors: [xcolorGreen, xcolorSky])),
             padding: const EdgeInsets.all(20),
-            width: context.percentWidth * 80,
-            height: context.screenWidth < 500
-                ? mobileHeight - 15
-                : desktopHeight - 15,
+            width: 400,
+            height: context.screenHeight < 550
+                ? 160
+                : context.screenWidth < 500
+                    ? mobileHeight - 15
+                    : desktopHeight - 15,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

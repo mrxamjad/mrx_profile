@@ -15,6 +15,7 @@ Container HeadingTitle(
     child: Center(
       child: Text(
         "$title",
+        textAlign: TextAlign.center,
         style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: fontSize,
