@@ -25,7 +25,7 @@ Padding CertificationSection({
         ),
         Container(
           height: context.screenHeight < 550
-              ? 230
+              ? 240
               : context.screenWidth >= 500
                   ? 400
                   : 300,
@@ -61,8 +61,8 @@ Padding CertificateView(BuildContext context) {
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: VxSwiper.builder(
         viewportFraction: 1.0,
-        autoPlay: true,
-        aspectRatio: 16 / 9,
+        autoPlay: false,
+        aspectRatio: 1 / 1,
         reverse: true,
         autoPlayCurve: Curves.easeIn,
         autoPlayInterval: 2.seconds,
@@ -70,6 +70,14 @@ Padding CertificateView(BuildContext context) {
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Container(
+            height: context.screenHeight < 550
+                ? 150
+                : context.screenWidth >= 500
+                    ? 350
+                    : 300,
+            width: context.screenWidth >= 500
+                ? context.percentWidth * 70
+                : context.percentWidth * 95,
             // color: Colors.amber,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -81,22 +89,26 @@ Padding CertificateView(BuildContext context) {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60)),
                     child: Container(
-                        height: context.screenHeight < 550
-                            ? 180
-                            : context.screenWidth >= 500
-                                ? 350
-                                : 300,
-                        width: context.screenWidth >= 500
-                            ? context.percentWidth * 70
-                            : context.percentWidth * 95,
-                        padding: const EdgeInsets.all(20),
+                        // height: context.screenHeight < 550
+                        //     ? 180
+                        //     : context.screenWidth >= 500
+                        //         ? 350
+                        //         : 300,
+                        // width: context.screenWidth >= 500
+                        //     ? context.percentWidth * 70
+                        //     : context.percentWidth * 95,
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 20, bottom: 20),
                         decoration: BoxDecoration(
                             border:
                                 Border.all(color: xcolorGreenAccent, width: 2),
                             borderRadius: BorderRadius.circular(60)),
                         child: Image.asset(
                           classData.certificateList[index]['certificate'],
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
+                          height: 190,
+                          width: 350,
+                          scale: 9.0,
                         ))),
                 Container(
                   height: 35,

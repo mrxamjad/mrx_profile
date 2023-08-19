@@ -72,6 +72,7 @@
       });
     });
   </script>
+<!-- script for hiding the loaiding icon-->
   <script>
     window.onload= function(){
       setTimeout( function(){
@@ -83,5 +84,29 @@
 
     }
   </script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js"></script>
+
+  <script type="module">
+
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyApAkdUH0ZuuFTzXnh0C0D7eMfOEP69nZY",
+    authDomain: "profile-724e1.firebaseapp.com",
+    projectId: "profile-724e1",
+    storageBucket: "profile-724e1.appspot.com",
+    messagingSenderId: "853570329104",
+    appId: "1:853570329104:web:34f1251bd8b798a9cf0895",
+    measurementId: "G-FQGWLG4HBM"
+  };
+
+  // Initialize Firebase
+  Firebase.initializeApp(firebaseConfig);
+  Firebase.getAnalytics(app);
+</script>
 </body>
 </html>

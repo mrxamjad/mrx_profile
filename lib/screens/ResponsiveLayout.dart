@@ -13,11 +13,15 @@ class ResponsiveLayout extends StatefulWidget {
 class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   @override
   Widget build(BuildContext context) {
-    double currentHieght = MediaQuery.of(context).size.height;
-    double currentWidth = MediaQuery.of(context).size.width;
+    double currentHieght =
+        double.parse(MediaQuery.of(context).size.height.toString());
+    double currentWidth =
+        double.parse(MediaQuery.of(context).size.width.toString());
     return LayoutBuilder(
       builder: (contex, constraints) {
-        return (currentWidth < 600 ? HomePage() : DesktopLayout());
+        return (currentWidth.toDouble() < 600.0.toDouble()
+            ? HomePage()
+            : DesktopLayout());
       },
     );
   }

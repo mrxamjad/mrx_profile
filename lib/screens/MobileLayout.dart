@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-
 import 'package:lottie/lottie.dart';
 import 'package:mrx_profile/Widget/CertificateView.dart';
 import 'package:mrx_profile/Widget/CodingSection.dart';
@@ -10,7 +9,6 @@ import 'package:mrx_profile/Widget/Review.dart';
 import 'package:mrx_profile/Widget/SkillSection.dart';
 import 'package:mrx_profile/Widget/socialSection.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 import '../Widget/drawer.dart';
 
 class HomePage extends StatelessWidget {
@@ -43,8 +41,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: context.screenHeight,
-              width: context.screenWidth,
+              height: context.screenHeight.toDouble(),
+              width: context.screenWidth.toDouble(),
               child: Lottie.network(
                   fit: BoxFit.cover,
                   "https://assets10.lottiefiles.com/packages/lf20_ugIuhrl2vw.json"),
@@ -66,7 +64,7 @@ class HomePage extends StatelessWidget {
                     TestomonialRevies(
                       context: context,
                     ),
-                    HireMeSection(context),
+                    // HireMeSection(context),
 
                     SocialNewtwork(context),
 

@@ -1,7 +1,5 @@
 // Hire me Section
 
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mrx_profile/Widget/CertificateView.dart';

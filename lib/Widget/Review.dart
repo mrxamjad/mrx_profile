@@ -1,6 +1,10 @@
 // Skill Sections
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mrx_profile/Controller/ClassData.dart';
+import 'package:mrx_profile/ModelClass/SkillsData.dart';
 import 'package:mrx_profile/Widget/HeadingTitle.dart';
 import 'package:mrx_profile/Widget/drawer.dart';
 import 'package:mrx_profile/Widget/style.dart';
@@ -24,9 +28,9 @@ Padding TestomonialRevies({
               HeadingTitle(title: "People that always been our fist priority"),
         ),
         Container(
-          height: context.screenHeight < 550
-              ? 220
-              : context.screenWidth < 500
+          height: context.screenHeight < 550.0
+              ? 220.0
+              : context.screenWidth < 500.0
                   ? mobileHeight
                   : desktopHeight,
           // width: context.screenWidth,
@@ -49,7 +53,7 @@ Padding TestomonialRevies({
               child: VxSwiper.builder(
                 itemCount: classData.reviewsList.length,
                 autoPlay: true,
-                viewportFraction: 1,
+                viewportFraction: 1.0,
                 enlargeCenterPage: true,
                 autoPlayAnimationDuration: 2.seconds,
                 itemBuilder: (context, index) => reviewCard(
@@ -82,9 +86,9 @@ Padding reviewCard(
     padding: const EdgeInsets.all(8.0),
     child: Center(
       child: SizedBox(
-        height: context.screenHeight < 550
-            ? 190
-            : context.screenWidth < 500
+        height: context.screenHeight < 550.0
+            ? 190.0
+            : context.screenWidth < 500.0
                 ? mobileHeight - 10
                 : desktopHeight - 10,
         child: Card(

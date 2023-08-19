@@ -1,11 +1,28 @@
 // Code for Coding Section
+
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:mrx_profile/BackendService/FirestoreService.dart';
 import 'package:mrx_profile/Widget/HeadingTitle.dart';
 import 'package:mrx_profile/Widget/drawer.dart';
 import 'package:mrx_profile/Widget/skillProgress.dart';
 import 'package:mrx_profile/Widget/style.dart';
 import 'package:mrx_profile/constants/xcolor.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+int getPercent(String level) {
+  if (level == "Expert") {
+    return 100;
+  } else if (level == "Advance") {
+    return 75;
+  } else if (level == "InterMediat") {
+    return 50;
+  } else {
+    return 25;
+  }
+}
 
 Padding CodingSection(BuildContext context) {
   return Padding(
@@ -36,32 +53,33 @@ Padding CodingSection(BuildContext context) {
                     style: xTextStyle(bold: true),
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SkillProgressCircular(
-                        percent: 100,
-                        skillName: "Flutter",
-                        color: xcoloryellow,
-                      ),
-                      SkillProgressCircular(
-                          percent: 75,
-                          skillName: "Dart",
-                          color: xcolorGreenAccent),
-                      SkillProgressCircular(
-                        percent: 50,
-                        skillName: "Java",
-                        color: Colors.teal,
-                      ),
-                      SkillProgressCircular(
-                          innerFontSize: 14,
-                          percent: 25,
-                          skillName: "Web Development",
-                          color: Colors.red[400]!)
-                    ],
+                Container(
+                  // width: 200,
+                  height: 200,
+                  child: StreamBuilder(
+                    stream: FirestoreService.readCodingSkill(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final codingData = snapshot.data;
+                        // codingData!.sort();
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: codingData!.length,
+                          itemBuilder: (context, index) {
+                            return SkillProgressCircular(
+                              percent: getPercent(codingData[index]['level']),
+                              skillName: codingData[index]['skill'],
+                              color: Colors.primaries[
+                                  Random().nextInt(Colors.primaries.length)],
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      } else {
+                        return CircularPercentIndicator(radius: 20);
+                      }
+                    },
                   ),
                 )
               ],
