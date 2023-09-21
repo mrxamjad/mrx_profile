@@ -15,7 +15,7 @@ class FirestoreService {
     }
   }
 
-  // Upload Image to firebase
+  // Upload  Profile Image to firebase
   Future _uploadImage(String filename, var file, String updateField) async {
     UploadTask uploadTask;
     final ref =
@@ -79,7 +79,7 @@ class FirestoreService {
     String? downloadURL = "";
     final reference = FirebaseStorage.instance
         .ref("$fireStorageRefName")
-        .child("resume$fileName.pdf");
+        .child("resume.pdf");
     final uploadTask = reference.putFile(file);
     debugPrint("Firestore upaloding started");
     await uploadTask
@@ -102,4 +102,56 @@ class FirestoreService {
             });
     debugPrint("Resume Data Successfully Updated");
   }
+
+  // CERTIFICATE FIRESTORE SERVICES
+
+// GET ALL CERTIFICATE DATA
+  static Stream<List<Map<String, dynamic>>> getCertificateData() {
+    return FirebaseFirestore.instance
+        .collection('certificate')
+        .snapshots()
+        .map((snaps) => snaps.docs.map((e) => (e.data())).toList());
+  }
+
+  // GET COMMENT DATA
+  static Stream<List<Map<String, dynamic>>> getCommentData() {
+    return FirebaseFirestore.instance
+        .collection('comments')
+        .snapshots()
+        .map((snaps) => snaps.docs.map((e) => (e.data())).toList());
+  }
+
+  //Get Skill Data
+
+  static Stream<List<Map<String, dynamic>>> getRegularSkillData() {
+    return FirebaseFirestore.instance
+        .collection('regular_skill')
+        .snapshots()
+        .map((snaps) => snaps.docs.map((e) => (e.data())).toList());
+  }
+
+  //Add regular skill data
+
+  static Future addRegularSkill(
+      String skill, String level, String index) async {
+    FirebaseFirestore.instance.collection('regular_skill').doc('$index').set(
+        {'skill': skill, 'level': level, 'index': index}).catchError((error) {
+      debugPrint("Error in adding coding skill: $error");
+    }).then((value) {
+      debugPrint("Codin Skill added");
+    });
+  }
+}
+
+//GET RESUME LINK
+//Get the resume data from Firebase
+ Future getResumeData() async {
+  List<Map<String, dynamic>> list = [];
+
+  final results = await FirebaseFirestore.instance.collection("resume").get();
+  list = results.docs.map((e) => e.data()).toList();
+  String link = list[0]['link'];
+  debugPrint("PDF link: $link");
+
+  return list;
 }

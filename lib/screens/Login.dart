@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mrx_profile/constants/xcolor.dart';
 import 'package:mrx_profile/screens/AdminPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../BackendService/SharePref.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,7 +20,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController? emailController, passController;
+  TextEditingController emailController=TextEditingController(), passController=TextEditingController();
+  String email="",pass="";
+
   loginWithEmail() {
     VxToast.show(context, msg: "Clicked");
     context.nextPage(AdminPage());
@@ -39,10 +45,18 @@ class _LoginScreenState extends State<LoginScreen> {
     // });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
       body: Stack(children: [
+        // if(  SharePref.checkAdmin())
+
+
+
+
         Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -73,24 +87,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
+                    style: TextStyle( color: Colors.white),
                     cursorColor: xcolorGreenAccent,
+                    onChanged: (value) {
+                      email=emailController.text;
+
+                    },
+
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.email_outlined,
-                        color: xcolorGreenAccent,
+                        color: xcolorPinkDisc
+                        ,
                       ),
                       label: Text("Email"),
                       hintText: "Email",
-                      prefixIconColor: xcolorGreenAccent,
-                      labelStyle: TextStyle(color: xcolorGreenAccent),
-                      hintStyle: TextStyle(color: xcolorGreenAccent),
-                      border: OutlineInputBorder(
+                      prefixIconColor: xcolorPinkDisc,
+                      labelStyle: TextStyle(color: xcolorPinkDisc),
+                      hintStyle: TextStyle(color: xcolorPinkDisc),
+
+                     enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide:
-                              BorderSide(color: xcolorGreenAccent, width: 3)),
+                              BorderSide(color: xcolorPinkDisc, width: 1)),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: xcolorPink, width: 3)),
+                          borderSide: BorderSide(color: xcolorGreenAccent, width: 1)),
                     ),
                   ),
                   SizedBox(
@@ -98,56 +120,135 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextField(
                     cursorColor: xcolorGreenAccent,
+                    style: TextStyle( color: Colors.white),
                     obscureText: true,
+                    obscuringCharacter:"*",
                     keyboardType: TextInputType.visiblePassword,
                     controller: passController,
+                    onChanged: (value) {
+                      pass=passController.text;
+
+                    },
                     decoration: InputDecoration(
                         fillColor: Colors.white,
                         prefixIcon: Icon(Icons.password_outlined,
-                            color: xcolorGreenAccent),
+                            color: xcolorPinkDisc),
                         label: Text("Password"),
                         hintText: "Password",
                         prefixIconColor: xcolorGreenAccent,
-                        labelStyle: TextStyle(color: xcolorGreenAccent),
-                        hintStyle: TextStyle(color: xcolorGreenAccent),
-                        border: OutlineInputBorder(
+                        labelStyle: TextStyle(color: xcolorPinkDisc),
+                        hintStyle: TextStyle(color: xcolorPinkDisc),
+                        enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                                BorderSide(color: xcolorGreenAccent, width: 3)),
+                                BorderSide(color: xcolorPinkDisc, width: 1)),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                                BorderSide(color: xcolorPink, width: 3))),
+                                BorderSide(color: xcolorGreenAccent, width: 1))),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
+                  GestureDetector(
+                    onTap: () async {
+                      await SharePref.setAdmin(true);
+
+                        // loginWithEmail();
+                      try {
+
+                        if(email.isNotEmptyAndNotNull & pass.isNotEmptyAndNotNull) {
+                          final credential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                              email: email,
+                              password: pass
+                          );
+                          context.showToast(msg: "Login Successfull", bgColor: Colors.green, position: VxToastPosition.center );
+                          email=pass="";
+                          emailController.clear();
+                          passController.clear();
+
+                          context.nextPage(AdminPage());
+                        }else{
+                          context.showToast(msg: "User or Password is empty!", bgColor: Colors.red, position: VxToastPosition.center );
+                        }
+
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+
+                          context.showToast(msg: "No user found for that email.", bgColor: Colors.red, position: VxToastPosition.center );
+                        } else if (e.code == 'wrong-password') {
+
+
+                          context.showToast(msg: "Wrong password provided for that user.", bgColor: Colors.red, position: VxToastPosition.center );
+
+                        }else{
+
+                          context.showToast(msg: "Wrong username or password.", bgColor: Colors.red, position: VxToastPosition.top, textColor: Colors.white );
+
+                        }
+                      }
+
+
+                      },
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
                         width: 100,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              width: 2,
-                              color: xcolorGreenAccent,
-                            )),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                width: 1,
+                                color: xcolorPinkDisc,
+                              )),
                         margin: EdgeInsets.all(5),
                         alignment: Alignment.center,
-                        child: GestureDetector(
-                          onTap: () {
-                            loginWithEmail();
-                            // context.nextPage(AdminPage());
-                          },
-                          child: Row(
+                        child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                               Text(
                                 "Login",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: xcolorPinkDisc,
                                     fontWeight: FontWeight.bold),
                               ),
                               Icon(
                                 Icons.login_rounded,
-                                color: xcoloryellow,
+                                color: xcolorPinkDisc,
+                              )
+                            ],
+                          ),
+                      ),
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        width: 120,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              width: 1,
+                              color: xcolorPinkDisc,
+                            )),
+                        margin: EdgeInsets.all(5),
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: () async {
+                            await SharePref.setAdmin(false);
+
+                            context.nextPage(AdminPage());
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                               Text(
+                                "Guest User",
+                                style: TextStyle(
+                                    color: xcolorPinkDisc,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                Icons.person,
+                                color: xcolorPinkDisc,
                               )
                             ],
                           ),

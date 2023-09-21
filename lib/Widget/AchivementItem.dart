@@ -5,7 +5,7 @@ import 'package:mrx_profile/Widget/style.dart';
 
 SizedBox AchivementItem({
   required BuildContext context,
-  double size = 130,
+  double size = 170,
   double elevation = 10,
   required headText,
   required descriptionText,
@@ -45,21 +45,24 @@ SizedBox AchivementItem({
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           bottomLeft: Radius.circular(30))),
-                  child: Text(
-                    headText,
-                    style: xTextStyle(
-                        bold: true,
-                        color: Colors.white,
-                        fontSize: headTextSize),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      headText,
+                      style: xTextStyle(
+                          bold: true,
+                          color: Colors.white,
+                          fontSize: headTextSize),
+                    ),
                   )),
               Container(
-                margin: const EdgeInsets.only(right: 5),
+                margin: const EdgeInsets.only(right: 8, bottom: 5),
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(30),
-                        bottomLeft: Radius.circular(30))),
+                        bottomLeft: Radius.circular(30),bottomRight: Radius.circular(30))),
                 child: Text(
                   descriptionText,
                   style: xTextStyle(

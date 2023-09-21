@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mrx_profile/BackendService/FirestoreService.dart';
 import 'package:mrx_profile/Widget/HeadingTitle.dart';
@@ -10,6 +12,18 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'CommanButton.dart';
+
+int getPercent(String level) {
+  if (level == "Beginner") {
+    return 25;
+  } else if (level == "Medium") {
+    return 50;
+  } else if (level == "Advance") {
+    return 75;
+  } else {
+    return 100;
+  }
+}
 
 // Drawer for app bar to show profile
 Container CustomDrawer({required BuildContext context, double width = 250}) {
@@ -25,11 +39,12 @@ Container CustomDrawer({required BuildContext context, double width = 250}) {
     child: SingleChildScrollView(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ProfileImage(context),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                     decoration: BoxDecoration(
@@ -37,29 +52,27 @@ Container CustomDrawer({required BuildContext context, double width = 250}) {
                         // border: Border.all(width: 1, color: Colors.red[400]!)
                         ),
                     child: HeadingTitle(title: "Skills")),
-                Column(
-                  children: [
-                    skillProgress(
-                        context: context,
-                        skillName: "Dart",
-                        perscent: 100,
-                        width: width * 0.8),
-                    skillProgress(
-                        context: context,
-                        skillName: "Java",
-                        perscent: 75,
-                        width: width * 0.8),
-                    skillProgress(
-                        context: context,
-                        skillName: "MongoDB",
-                        perscent: 50,
-                        width: width * 0.8),
-                    skillProgress(
-                        context: context,
-                        skillName: "Web Development",
-                        perscent: 25,
-                        width: width * 0.8),
-                  ],
+                SizedBox(
+
+                  height: 200,
+                  child: StreamBuilder(
+                    stream: FirestoreService.getRegularSkillData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var skillData = snapshot.data!;
+                        return ListView.builder(
+                          itemCount: skillData.length,
+                          itemBuilder: (context, index) => skillProgress(
+                              context: context,
+                              skillName: skillData[index]['skill'],
+                              perscent: getPercent(skillData[index]['level']),
+                              width: width * 0.8),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  ),
                 )
               ],
             ),
@@ -91,9 +104,19 @@ Container CustomDrawer({required BuildContext context, double width = 250}) {
               )
             ]),
             InkWell(
-              child: CommanButton(
-                icon: Icon(Icons.download),
-                name: "Download CV",
+              child: Container(
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.amberAccent,width: 2)
+                ),
+                child: CommanButton(
+                  icon: Icon(
+                    Icons.download,
+                    color: xcoloryellow,
+                  ),
+                  name: "Download CV",
+                ),
               ),
               onTap: () async {
                 debugPrint(link + ": $link");
@@ -133,21 +156,30 @@ Container CustomDrawer({required BuildContext context, double width = 250}) {
 Row otherCertification(BuildContext context, String text) {
   return Row(
     children: [
-      Container(
-        child: const Icon(
-          Icons.check_rounded,
-          color: Colors.yellow,
-        ),
+       Padding(
+         padding: const EdgeInsets.all(5.0),
+         child: CircleAvatar(
+           radius: 10,
+          backgroundColor:Colors.white ,
+          child: Icon(
+            size: 15,
+            Icons.star,
+            color: Colors.primaries[
+            Random().nextInt(Colors.primaries.length)],
+          ),
       ),
-      Container(
-        padding: const EdgeInsets.all(3),
-        width: context.percentHeight * 20,
-        child: Text(
-          text,
-          maxLines: 2,
-          softWrap: true,
-          style: const TextStyle(
-            color: Colors.white,
+       ),
+      Expanded(
+        child: Container(
+          padding: const EdgeInsets.all(3),
+          // width: context.percentHeight * 20,
+          child: Text(
+            text,
+            maxLines: 2,
+            softWrap: true,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       )
@@ -161,14 +193,14 @@ Container ProfileImage(BuildContext context) {
     child: FutureBuilder<Map<String, dynamic>?>(
         future: FirestoreService.readProfile(),
         builder: (context, snapshot) {
-          String _name = "", _position = "", _bannerImage = "", _founder = "";
+          String _name = "", _position = "", _bannerImage = "", _founder = "", _email="", _address="";
           if (snapshot.hasData) {
             var profile = snapshot.data;
             print("DATA IS: ${profile}");
             _name = profile!['name'];
-            //   _address = profile['adress'];
+              _address = profile['adress'];
             // _desc = profile['description'];
-            //   _email = profile['email'];
+              _email = profile['email'];
             //   _facebook = profile['facebook'];
             _founder = profile['founder'];
             //   _github = profile['github'];
@@ -188,21 +220,23 @@ Container ProfileImage(BuildContext context) {
               // height: context.screenHeight * .30,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
+                    height: context.screenWidth > 600 ?context.percentWidth * 20:context.percentWidth * 60,
                     padding: EdgeInsets.only(
-                      top: context.screenWidth < 500 ? 65 : 20,
+                      top: context.screenWidth < 600 ? 65 : 40,
                       left: 20,
                       right: 20,
+                      bottom: 20
                     ),
                     child: CircleAvatar(
-                      radius: context.percentWidth * 15,
+                      radius: context.percentWidth * 25,
                       backgroundColor: xcolorPink,
                       child: Container(
                         margin: EdgeInsets.all(3),
                         child: CircleAvatar(
-                          radius: context.percentWidth * 15 - 3,
+                          radius: context.percentWidth * 25 - 3,
                           backgroundImage: NetworkImage(
                             _bannerImage,
                           ),
@@ -237,17 +271,72 @@ Container ProfileImage(BuildContext context) {
                         fontStyle: FontStyle.normal,
                         color: Colors.white,
                       )),
-                  Text("Founder: \n $_founder",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontStyle: FontStyle.normal,
-                        color: Colors.white,
-                      )),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("--------: Founder :--------",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          )),
+                      Text("$_founder",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                          )),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("----------: Email :----------",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold
+                          )),
+                      Text("$_email",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                          )),
+                    ],
+                  ),
+                  Container(
+
+                    margin: const EdgeInsets.all(5),
+                    height: 100,
+                    width: 200,
+                    decoration: BoxDecoration( borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.white, width: 2)),
+                    child: Column(children: [
+                      Container(
+                        
+                        
+                        child: Text("Adress",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        decoration: BoxDecoration(border: Border.all(color: xcolorPink ,width: 2), borderRadius: BorderRadius.circular(30)),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                      ),
+                      Expanded(child: Text("$_address" ,textAlign: TextAlign.center,style: TextStyle(color: Colors.white),))
+
+                    ]),
+                  ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
-                        width: 100,
+                        width: 150,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
@@ -264,7 +353,7 @@ Container ProfileImage(BuildContext context) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "Login",
+                                "Admin Control",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),

@@ -17,10 +17,11 @@ class CommanButton extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              width: 2,
-              color: xcolorGreenAccent,
-            )),
+            // border: Border.all(
+            //   width: 2,
+            //   color: xcolorGreenAccent,
+            // )
+        ),
         margin: const EdgeInsets.all(8),
         alignment: Alignment.center,
         child: GestureDetector(
@@ -28,12 +29,14 @@ class CommanButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              icon ?? SizedBox(),
+              SizedBox(width: 10,),
               Text(
                 name ?? "",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              icon ?? SizedBox()
+
             ],
           ),
         ));

@@ -63,7 +63,7 @@ Padding SkillSection({
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(80), topRight: Radius.circular(20))),
           child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(3.0),
               child: StreamBuilder(
                 stream: readSkills(),
                 builder: (context, snapshot) {

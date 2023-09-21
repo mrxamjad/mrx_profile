@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mrx_profile/Widget/CertificateView.dart';
-import 'package:mrx_profile/Widget/CodingSection.dart';
+import 'package:mrx_profile/Widget/CodingSkills.dart';
 import 'package:mrx_profile/Widget/HireMe.dart';
 import 'package:mrx_profile/Widget/ProfileSection.dart';
-import 'package:mrx_profile/Widget/Review.dart';
-import 'package:mrx_profile/Widget/SkillSection.dart';
+import 'package:mrx_profile/Widget/Comments.dart';
+import 'package:mrx_profile/Widget/SpotlightSection.dart';
 import 'package:mrx_profile/Widget/socialSection.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../Widget/drawer.dart';
@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   late PDFViewController pdfViewController;
+  FixedExtentScrollController _scrollController=FixedExtentScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class HomePage extends StatelessWidget {
 
                     CertificationSection(context: context),
                     TestomonialRevies(
-                      context: context,
+                      // context: context, scrollController: _scrollController,
                     ),
                     // HireMeSection(context),
 

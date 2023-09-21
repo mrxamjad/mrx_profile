@@ -35,26 +35,24 @@ Container xDesigButton(
           )),
       margin: EdgeInsets.all(8),
       alignment: Alignment.center,
-      child: GestureDetector(
-        onTap: () {},
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null && iconBefore)
-              Icon(
-                icon,
-                color: xcoloryellow,
-              ),
-            Text(
-              buttonName ?? "Button",
-              style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null && iconBefore)
+            Icon(
+              icon,
+              color: xcoloryellow,
             ),
-            if (icon != null && !iconBefore)
-              Icon(
-                icon,
-                color: xcoloryellow,
-              )
-          ],
-        ),
+          Text(
+            buttonName ?? "Button",
+            style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+          ),
+          if (icon != null && !iconBefore)
+            SizedBox( width: 5,),
+            Icon(
+              icon,
+              color: xcolorPink,
+            )
+        ],
       ));
 }
